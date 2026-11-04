@@ -68,3 +68,40 @@ button.pri{background:var(--g);color:#fff;border-color:var(--g)}button:disabled{
 @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
 @media(prefers-reduced-motion:reduce){.sh-tick{animation:none}.sh-bar i{transition:none}}
 @media(min-width:560px){.sh-cta{position:static;margin:22px 0 0;padding:0;background:none}}
+
+/* ---------- Check-in page: prayer theme over LightPillar ---------- */
+.pg{position:relative;min-height:100vh;min-height:100dvh;background:#0d0906;color:#fbf1dc;overflow-x:hidden;isolation:isolate}
+.pg-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(70% 55% at 50% 0%,rgba(233,176,79,.30),transparent 70%),radial-gradient(50% 40% at 80% 100%,rgba(224,100,40,.16),transparent 70%),#0d0906}
+.pg-veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(13,9,6,.1) 0%,rgba(13,9,6,.45) 55%,rgba(13,9,6,.74) 100%)}
+.pg-in{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:clamp(18px,4vw,48px);min-height:100vh;min-height:100dvh;display:grid;grid-template-columns:minmax(250px,370px) minmax(0,1fr);gap:clamp(22px,5vw,56px);align-items:center}
+.pg-flyer img{display:block;width:100%;height:auto;border-radius:18px;border:1px solid rgba(255,227,160,.35);box-shadow:0 0 0 6px rgba(255,227,160,.06),0 24px 70px rgba(0,0,0,.6),0 0 60px rgba(233,176,79,.25)}
+.pg-church{margin:0;font-weight:800;font-size:clamp(20px,5.4vw,32px);letter-spacing:.16em;text-transform:uppercase;color:#f3c66a}
+.pg-title{margin:.15em 0 .1em;font-family:"Cormorant Garamond","Playfair Display",Georgia,"Times New Roman",serif;font-weight:700;font-size:clamp(38px,8.5vw,64px);line-height:1;background:linear-gradient(180deg,#fff7e0,#f3c66a);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none}
+.pg-theme{display:inline-block;margin-top:6px;padding:5px 14px;border-radius:9px;background:#cf3b22;color:#fff;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.pg-meta{list-style:none;margin:12px 0 16px;padding:0;display:grid;gap:8px;font-size:clamp(15px,3.8vw,17px)}
+.pg-meta li{display:flex;gap:10px;align-items:center}.pg-meta svg{color:#f3c66a;flex:none}
+.pg-card{background:rgba(22,15,9,.68);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,227,160,.28);border-radius:20px;padding:clamp(18px,4.5vw,28px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.pg-card h2{margin:0;font-size:clamp(22px,5vw,26px);color:#fff7e0}
+.pg-sub{color:rgba(251,241,220,.78);font-size:14.5px;margin:6px 0 0}
+.pg-card label{display:block;margin:16px 0 6px;font-weight:600;font-size:13px;color:#ffe3a0}
+.pg-card input{width:100%;min-height:50px;padding:12px 14px;font-size:16px;color:#fff7e0;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,227,160,.28);border-radius:12px}
+.pg-card input::placeholder{color:rgba(251,241,220,.42)}
+.pg-card input:focus{outline:none;border-color:#f3c66a;box-shadow:0 0 0 3px rgba(243,198,106,.25)}
+.pg-go{display:block;width:100%;min-height:54px;margin:20px 0 0;border:0;border-radius:13px;font-size:16px;font-weight:800;color:#2a1606;background:linear-gradient(135deg,#ffe3a0,#e5a53b);box-shadow:0 8px 24px rgba(229,165,59,.35);cursor:pointer}
+.pg-go:hover:not(:disabled){filter:brightness(1.07)}.pg-go:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+.pg-ghost{display:block;width:100%;min-height:48px;margin:18px 0 0;border-radius:12px;border:1.5px solid rgba(255,227,160,.4);background:transparent;color:#ffe3a0;font-weight:700;font-size:15px;cursor:pointer}
+.pg-err{margin:12px 0 0;color:#ffb4a6;font-size:14px}
+.pg-fine{margin:14px 0 0;font-size:12px;line-height:1.5;color:rgba(251,241,220,.55)}
+.pg-verse{margin:20px 4px 0;font-family:Georgia,serif;font-style:italic;font-size:14.5px;line-height:1.55;color:rgba(255,227,160,.85)}
+.pg-verse span{display:block;margin-top:2px;font-style:normal;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:rgba(251,241,220,.55)}
+.pg-ok{text-align:center}
+.pg-tick{width:70px;height:70px;margin:0 auto 12px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#2a1606;background:linear-gradient(135deg,#ffe3a0,#e5a53b);animation:pgpop .45s cubic-bezier(.2,1.4,.4,1)}
+.pg-ticket{display:flex;justify-content:space-between;gap:10px;margin:16px 0 4px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,227,160,.22);text-align:left}
+.pg-ticket span{color:#f3c66a}
+@keyframes pgpop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+@media(max-width:820px){.pg-in{grid-template-columns:1fr;align-items:start;padding-top:26px}.pg-main{order:-1}.pg-flyer{max-width:400px;width:100%;margin:6px auto 10px}}
+@media(prefers-reduced-motion:reduce){.pg-tick{animation:none}}
+
+.pg-logo{display:block;width:clamp(110px,30vw,130px);height:auto;margin:0 0 14px;filter:drop-shadow(0 2px 14px rgba(0,0,0,.55))}
+.pg-pol{margin:0 0 14px;line-height:0}
+.pg-pol img{display:block;width:clamp(240px,74vw,420px);height:auto;filter:drop-shadow(0 2px 18px rgba(0,0,0,.55))}
