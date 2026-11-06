@@ -4,6 +4,7 @@ import LightPillar from '@/components/LightPillar';
 import { EVENT } from '@/lib/event';
 
 const MAX = 2000, MIN = 15;
+const STARTERS = ['God answered my prayer when…', 'I’m grateful for…', 'Today I felt…'];
 const Svg = ({ children, s = 22 }) => <svg viewBox="0 0 24 24" width={s} height={s} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{children}</svg>;
 
 export default function Share() {
