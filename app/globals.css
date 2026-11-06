@@ -35,39 +35,45 @@ button.pri{background:var(--g);color:#fff;border-color:var(--g)}button:disabled{
 .ad-back{display:none}
 @media(max-width:800px){.ad-rail{display:none}.ad-list{width:100%;border:0}.ad-top{padding:0 14px}.ad-body.has-sel .ad-list{display:none}.ad-body:not(.has-sel) .ad-pane.det{display:none}.ad-back{display:inline-flex}.ad-pane{padding:16px}}
 
-/* ---------- Share (testimony) page ---------- */
-.sh{min-height:100vh;min-height:100dvh;padding:clamp(12px,4vw,36px) clamp(12px,4vw,24px) 36px;background:radial-gradient(900px 380px at 50% -120px,var(--mint),transparent),var(--bg)}
-.sh-in{max-width:680px;margin:0 auto}
-.sh-hero{background:linear-gradient(135deg,#0c5a4c,#0f7a68 60%,#2a9d87);color:#fff;border-radius:22px;padding:clamp(22px,5vw,36px) clamp(20px,5vw,34px) clamp(40px,7vw,56px)}
-.sh-hero .pill{background:rgba(255,255,255,.18);color:#fff}
-.sh-hero h1{font-size:clamp(26px,6.5vw,40px);line-height:1.15;margin:14px 0 8px}
-.sh-hero p{margin:0;opacity:.9;font-size:clamp(14px,3.6vw,16px)}
-.sh-card{position:relative;margin-top:-28px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,5vw,30px);box-shadow:0 10px 30px rgba(15,46,39,.08)}
-.sh-anon{display:flex;gap:12px;align-items:flex-start;background:var(--mint);border-radius:14px;padding:14px 16px;color:var(--ink)}
-.sh-anon svg{flex:none;color:var(--g);margin-top:2px}
-.sh-lab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:22px 0 8px;font-weight:700;font-size:15px}
-.sh-ta{width:100%;min-height:190px;padding:14px 16px;font-size:16px;line-height:1.55;border:1.5px solid var(--line);border-radius:14px;resize:vertical;background:var(--card);color:var(--ink)}
-.sh-ta:focus{border-color:var(--g);outline:3px solid var(--mint);outline-offset:0}
-.sh-bar{height:5px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:8px}
-.sh-bar i{display:block;height:100%;background:var(--g);transition:width .15s}
-.sh-bar.warn i{background:#d9962b}
-.sh-meta{display:flex;justify-content:space-between;gap:10px;margin-top:6px;font-size:12.5px;color:var(--mut)}
+/* ---------- Share (testimony) page: same prayer theme as check-in ---------- */
+.sh .sh-in{position:relative;z-index:2;max-width:560px;margin:0 auto;padding:clamp(14px,4vw,36px) clamp(14px,4vw,24px) 24px}
+.sh-hero{text-align:center}
+.sh-hero .pg-logo{margin:0 auto 6px;width:clamp(64px,17vw,100px)}
+.sh-hero .pg-pol{margin:0 auto 8px}
+.sh-hero .pg-pol img{margin:0 auto;width:clamp(150px,44vw,300px)}
+.sh-lead{margin:6px 0 0;font-family:"Cormorant Garamond","Playfair Display",Georgia,"Times New Roman",serif;font-weight:700;font-size:clamp(22px,5.5vw,32px);line-height:1.1;color:#fff7e0;margin-bottom:14px}
+.sh .pg-card{padding:clamp(18px,5vw,30px)}
+.sh-anon{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;border-radius:12px;background:rgba(243,198,106,.12);border:1px solid rgba(255,227,160,.28);color:#fff7e0;font-size:14px}
+.sh-anon svg{flex:none;color:#f3c66a;margin-top:2px}
+.sh-anon span{color:rgba(251,241,220,.78)}
+.sh-lab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:18px 0 8px;font-weight:700;font-size:15px;color:#ffe3a0}
+.pg-card .sh-lab label{margin:0;font-size:15px}
+.sh-lab span{font-size:12.5px;font-weight:500;color:rgba(251,241,220,.6)}
+.sh-lab em{font-style:normal;font-weight:400;color:rgba(251,241,220,.6)}
+.sh-ta{width:100%;min-height:130px;padding:14px 16px;font-size:16px;line-height:1.55;color:#fff7e0;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,227,160,.28);border-radius:14px;resize:vertical;font-family:inherit}
+.sh-ta::placeholder{color:rgba(251,241,220,.42)}
+.sh-ta:focus{outline:none;border-color:#f3c66a;box-shadow:0 0 0 3px rgba(243,198,106,.25)}
+.sh-bar{height:5px;background:rgba(255,227,160,.16);border-radius:9px;overflow:hidden;margin-top:8px}
+.sh-bar i{display:block;height:100%;background:linear-gradient(90deg,#ffe3a0,#e5a53b);transition:width .15s}
+.sh-bar.warn i{background:#e0642a}
+.sh-meta{display:flex;justify-content:space-between;gap:10px;margin-top:6px;font-size:12.5px;color:rgba(251,241,220,.6)}
 .sh-chips{display:flex;flex-wrap:wrap;gap:8px}
-.sh-chip{width:auto;margin:0;min-height:42px;padding:8px 16px;border-radius:99px;font-size:14px;font-weight:600;background:var(--card);border:1.5px solid var(--line);color:var(--ink);cursor:pointer}
-.sh-chip.on{background:var(--g);border-color:var(--g);color:#fff}
-.sh-chip.ghost{border-style:dashed;font-weight:500;color:var(--mut);min-height:38px;font-size:13px}
-.sh-consent{display:flex;gap:12px;align-items:flex-start;margin-top:22px;padding:14px 16px;border:1.5px solid var(--line);border-radius:14px;cursor:pointer;font-size:14px;font-weight:400;line-height:1.45}
-.sh-consent input{width:22px;height:22px;flex:none;margin:1px 0 0;accent-color:var(--g)}
-.sh-consent.on{border-color:var(--g);background:var(--mint)}
-.sh-cta{position:sticky;bottom:0;margin:20px calc(-1 * clamp(18px,5vw,30px)) calc(-1 * clamp(18px,5vw,30px));padding:14px clamp(18px,5vw,30px) clamp(18px,5vw,30px);background:linear-gradient(to bottom,transparent,var(--card) 28%);border-radius:0 0 20px 20px}
-.sh-go{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;margin:0;font-size:16px;border-radius:14px}
-.sh-care{display:flex;gap:12px;align-items:flex-start;margin-top:18px;padding:14px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line);font-size:13.5px;color:var(--mut)}
-.sh-care svg{flex:none;color:var(--g);margin-top:1px}
-.sh-ok{text-align:center;padding:clamp(34px,9vw,64px) clamp(10px,4vw,24px)}
-.sh-tick{width:84px;height:84px;border-radius:50%;background:var(--mint);color:var(--g);display:inline-flex;align-items:center;justify-content:center;animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
-@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
-@media(prefers-reduced-motion:reduce){.sh-tick{animation:none}.sh-bar i{transition:none}}
-@media(min-width:560px){.sh-cta{position:static;margin:22px 0 0;padding:0;background:none}}
+.sh-chip{width:auto;margin:0;min-height:42px;padding:8px 16px;border-radius:99px;font:inherit;font-size:14px;font-weight:600;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,227,160,.3);color:#ffe3a0;cursor:pointer;transition:background .15s,border-color .15s}
+.sh-chip:hover{border-color:#f3c66a;background:rgba(255,227,160,.12)}
+.sh-chip:focus-visible,.sh-go:focus-visible,.pg-ghost:focus-visible{outline:2px solid #f3c66a;outline-offset:2px}
+.sh-chip.on{background:linear-gradient(135deg,#ffe3a0,#e5a53b);border-color:#e5a53b;color:#2a1606}
+.sh-chip.ghost{border-style:dashed;font-weight:500;color:rgba(251,241,220,.78);min-height:38px;font-size:13px}
+.pg-card .sh-consent{display:flex;gap:12px;align-items:flex-start;margin:14px 0 0;padding:12px 14px;border:1.5px solid rgba(255,227,160,.28);border-radius:14px;cursor:pointer;font-size:14px;font-weight:400;line-height:1.45;color:#fbf1dc}
+.pg-card .sh-consent input{width:22px;min-height:0;height:22px;flex:none;margin:1px 0 0;padding:0;accent-color:#e5a53b}
+.pg-card .sh-consent.on{border-color:#f3c66a;background:rgba(243,198,106,.12)}
+.sh-cta{margin-top:16px}
+.sh-go{display:flex;align-items:center;justify-content:center;gap:10px;margin:0}
+.sh-care{display:flex;gap:12px;align-items:flex-start;margin-top:16px;padding:14px 16px;border-radius:14px;background:rgba(22,15,9,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,227,160,.2);font-size:13.5px;color:rgba(251,241,220,.78)}
+.sh-care svg{flex:none;color:#f3c66a;margin-top:1px}
+.sh .pg-verse{text-align:center}
+.sh .pg-ok .pg-ghost{max-width:280px;margin:22px auto 0}
+@media(min-width:560px){.sh-cta{margin-top:22px}}
+@media(prefers-reduced-motion:reduce){.sh-bar i{transition:none}}
 
 /* ---------- Check-in page: prayer theme over LightPillar ---------- */
 .pg{position:relative;min-height:100vh;min-height:100dvh;background:#0d0906;color:#fbf1dc;overflow-x:hidden;isolation:isolate}
