@@ -77,7 +77,18 @@ export default function Admin() {
   // ----- actions -----
   const checkInNow = async (a) => { setBusy(true); await post('/api/admin/checkin', { id: a.id }); await load(); setBusy(false); };
   const retry = async () => { const r = await (await post('/api/admin/retry', {})).json(); setMsg(`Retried ${r.retried} message(s).`); load(); };
-  const mod = async (id, status) => { setD((x) => ({ ...x, testimonies: x.testimonies.map((t) => (t.id === id ? { ...t, status } : t)) })); await post('/api/admin/testimony', { id, status }, 'PATCH'); load(); };
+  const mod = async (id, status) => {
+    const prev = (d?.testimonies || []).find((t) => t.id === id)?.status;
+    setD((x) => ({ ...x, testimonies: x.testimonies.map((t) => (t.id === id ? { ...t, status } : t)) })); // optimistic
+    try {
+      const r = await post('/api/admin/testimony', { id, status }, 'PATCH');
+      if (!r.ok) { const j = await r.json().catch(() => ({})); throw new Error(j.error || `error ${r.status}`); }
+    } catch (e) {
+      setD((x) => ({ ...x, testimonies: x.testimonies.map((t) => (t.id === id ? { ...t, status: prev } : t)) })); // roll back
+      toast(`Could not save: ${e.message}`);
+    }
+    load();
+  };
   const pick = async (file) => {
     if (!file) return; setImp(null); const t = parseCsv(await file.text()); if (t.length < 2) return setImp({ error: 'The file has no rows.' });
     const h = t[0].map((x) => x.toLowerCase().replace(/[^a-z]/g, '')); const ix = (re) => h.findIndex((x) => re.test(x)); const n = ix(/name/), p = ix(/phone|mobile|number|tel|contact/), e = ix(/mail/);
