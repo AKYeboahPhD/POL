@@ -43,9 +43,11 @@ export function Overview(c) {
   const { A, T, S, TS, go, retry, msg, open } = c;
   const recent = useMemo(() => A.filter((a) => a.checked_in_at).sort((x, y) => y.checked_in_at.localeCompare(x.checked_in_at)).slice(0, 8), [A]);
   const kpis = [
-    { k: 'Checked in', v: S.checked, sub: `of ${S.total} registered`, ring: S.pct, tone: COLORS.pre, p: { status: 'in' } },
-    { k: 'Not yet arrived', v: S.notArrived, sub: S.total ? `${Math.round((100 - S.pct) * 10) / 10}% still expected` : 'No guests yet', tone: COLORS.out, p: { status: 'out' } },
-    { k: 'Walk-ins', v: S.walkinsIn, sub: S.checked ? `${S.walkShare}% of arrivals` : 'Registered at the door', tone: COLORS.walk, p: { type: 'walkin', status: 'in' } },
+    { k: 'Expected', v: S.pre, sub: 'on the pre-registered list', tone: COLORS.out, p: { type: 'pre' } },
+    { k: 'Registered & showed up', v: S.preIn, sub: S.pre ? `${S.preRate}% of those expected` : 'No pre-registered guests yet', ring: S.preRate, tone: COLORS.pre, p: { type: 'pre', status: 'in' } },
+    { k: 'No-shows', v: S.pre - S.preIn, sub: S.pre ? `${Math.round((100 - S.preRate) * 10) / 10}% never came` : 'No pre-registered guests yet', tone: COLORS.out, p: { type: 'pre', status: 'out' } },
+    { k: 'Walk-ins', v: S.walkinsIn, sub: 'came, but were not on the list', tone: COLORS.walk, p: { type: 'walkin', status: 'in' } },
+    { k: 'Total who came', v: S.checked, sub: `${S.preIn} registered + ${S.walkinsIn} walk-ins`, tone: COLORS.pre, p: { status: 'in' } },
     { k: 'Testimonies', v: TS.total, sub: TS.status.pending ? `${TS.status.pending} waiting for review` : 'All reviewed', tone: '#7a4a1e', tab: 'testimonies', p: { status: TS.status.pending ? 'pending' : 'all' } },
   ];
   const attention = [
@@ -96,17 +98,17 @@ export function Analytics(c) {
   const [tstat, setTstat] = useState(null);
   const paceLabels = pace.bins.map((_, i) => { const m = new Date(Date.now() - (pace.bins.length - i) * pace.step * 60000); return hhmm(m); });
   const tiles = [
-    { k: 'Check-in rate', v: S.pct, suffix: '%', sub: `${S.checked} of ${S.total} guests` },
+    { k: 'Total who came', v: S.checked, sub: `${S.preIn} registered + ${S.walkinsIn} walk-ins` },
     { k: 'Last 60 minutes', v: pace.total, sub: 'check-ins' },
     { k: 'Busiest 15 minutes', txt: ins.busiest ? ins.busiest.label : '—', sub: ins.busiest ? `${ins.busiest.total} check-ins` : 'No data yet' },
     { k: 'Average pace', v: ins.perHour, sub: 'check-ins per hour' },
-    { k: 'Preregistered show-up', v: S.preRate, suffix: '%', sub: `${S.preIn} of ${S.pre} came` },
+    { k: 'Show-up rate', v: S.preRate, suffix: '%', sub: `${S.preIn} of ${S.pre} registered came` },
     { k: 'First → latest arrival', txt: ins.first ? `${hhmm(ins.first)} → ${hhmm(ins.last)}` : '—', sub: ins.first ? 'event time (GMT)' : 'No data yet' },
   ];
   const arrived = [
-    { key: 'preIn', label: 'Preregistered arrived', value: S.preIn, color: COLORS.pre },
+    { key: 'preIn', label: 'Registered & showed up', value: S.preIn, color: COLORS.pre },
     { key: 'walkIn', label: 'Walk-ins', value: S.walkinsIn, color: COLORS.walk },
-    { key: 'out', label: 'Still expected', value: S.notArrived, color: COLORS.out },
+    { key: 'out', label: 'No-shows', value: S.pre - S.preIn, color: COLORS.out },
   ];
   const source = [{ key: 'pre', label: 'Preregistered', value: S.pre, color: COLORS.pre }, { key: 'walkin', label: 'Walk-ins', value: S.walkins, color: COLORS.walk }];
   const smsSeg = ['delivered', 'sent', 'queued', 'failed', 'none'].map((k) => ({ key: k, label: SMS_LABEL[k], value: S.sms[k], color: COLORS[k] }));
@@ -234,9 +236,10 @@ export function Import(c) {
       <AN><div className="adm-hero"><div><h1>Import preregistered guests</h1><p className="adm-sub">Bring in a guest list from Excel or Google Sheets.</p></div></div></AN>
       <AN><section className="adm-card">
         <p className="adm-sub" style={{ fontSize: 14 }}>Upload a CSV with full_name, phone and email columns (in Excel: File → Save As → CSV). Existing numbers are skipped, and nobody is checked in or texted by importing. <a href={template} download="guest-template.csv" className="adm-link">Download template</a></p>
-        <input type="file" accept=".csv,text/csv" className="adm-in" style={{ marginTop: 14 }} onChange={(e) => pick(e.target.files[0])} />
+        <input type="file" accept=".csv,text/csv" className="adm-in" style={{ marginTop: 14 }} onChange={(e) => { pick(e.target.files[0]); e.target.value = ''; }} />
         {imp?.error && <p className="adm-err">{imp.error}</p>}
-        {imp && !imp.error && <div className="adm-found"><p><Pill tone="green">{imp.done ? imp.added : imp.ready} {imp.done ? 'added' : 'ready to add'}</Pill> <Pill tone="amber">{imp.duplicates} already registered</Pill> <Pill tone="red">{imp.errors.length} problems</Pill></p>
+        {imp && !imp.error && <div className="adm-found"><p><Pill tone="green">{imp.done ? imp.added : imp.ready - (imp.matched || 0)} {imp.done ? 'added' : 'new to add'}</Pill> <Pill tone="green">{imp.matched || 0} {imp.done ? 'matched to people who came' : 'came and will be matched'}</Pill> <Pill tone="amber">{imp.duplicates} already registered</Pill> {imp.conflicts > 0 && <Pill tone="amber">{imp.conflicts} same phone, different name</Pill>} <Pill tone="red">{imp.errors.length} problems</Pill></p>
+          {imp.conflicts > 0 && <p className="adm-sub">Left as walk-ins (same phone number, no shared name): {(imp.conflictRows || []).map((x) => `${x.listed} / came as ${x.cameAs}`).join('; ')}{imp.conflicts > 10 ? '…' : ''}</p>}
           {imp.errors.slice(0, 15).map((e, i) => <p key={i} className="adm-err">Row {e.row}: {e.msg}</p>)}{imp.errors.length > 15 && <p className="adm-sub">…and {imp.errors.length - 15} more.</p>}
           {!imp.done && imp.ready > 0 && <button className="adm-btn pri" disabled={busy} onClick={doImport}>Import {imp.ready} guests</button>}{imp.done && <p>Done. Guests are now in the Attendees list.</p>}</div>}
       </section></AN>
